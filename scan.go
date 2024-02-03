@@ -33,8 +33,11 @@ func main() {
 
 	// new queue with selected number of consumer threads
 	// and default queue memory
-	q, _ := queue.New(ct, &queue.InMemoryQueueStorage{MaxSize: 10000})
+	q, err := queue.New(ct, &queue.InMemoryQueueStorage{MaxSize: 10000})
 	q.AddURL(root_url)
+	if err != nil {
+		panic(err)
+	}
 
 	// prepare slices for storing URLs
 	visited_urls := []string{root_url + "/"}
@@ -95,7 +98,6 @@ func collect_user_input() (string, int) {
 
 	// overwrite root_url if user inputs one
 	fmt.Scanf("%s\n", &root_url)
-	fmt.Printf("Root URL: %s\n\n", root_url)
 
 	// clear
 	clear_chars()

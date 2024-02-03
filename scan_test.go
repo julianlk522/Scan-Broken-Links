@@ -29,7 +29,11 @@ func TestCollectUserInput(t *testing.T) {
 				t.Fatal(err)
 			}
 			os.Stdin = r
+<<<<<<< HEAD
 			// write test input to stdin
+=======
+			// write stdin to test input
+>>>>>>> 6dfe65f5aecc4ce94c8e19b4f51530f50d79e1d7
 			w.Write([]byte(tt.input))
 			// use default value for numbers of
 			// consumer threads
@@ -66,7 +70,11 @@ func TestCollectUserInput(t *testing.T) {
 			// use default value for root_url
 			w.Write([]byte("\n"))
 
+<<<<<<< HEAD
 			// write test input to stdin
+=======
+			// write stdin to test input
+>>>>>>> 6dfe65f5aecc4ce94c8e19b4f51530f50d79e1d7
 			w.Write([]byte(tt.input))
 			w.Close()
 

@@ -9,6 +9,6 @@ Outputs any pages returning a 4xx status code.
 
 ## Default URL
 
-https://google.com is the default root URL.
+https://www.google.com is the default root URL.
 
 If you would like to scan another site, pass in the root URL at the prompt during execution.

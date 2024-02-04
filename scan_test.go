@@ -76,3 +76,38 @@ func TestCollectUserInput(t *testing.T) {
 		})
 	}
 }
+
+func TestScanSite(t *testing.T) {
+	tests := []struct {
+		name string
+		input string
+		output []string
+	} {
+		// bad link... should be reported
+		{"Test1", "https://julianlk.com/nothinghere", []string{"https://julianlk.com/nothinghere"}},
+		// no links... no bad links, obviously
+		{"Test2", "https://julianlk.com", []string{}},
+		// a great site with few links... all should work
+		// (no bad links)
+		{"Test3", "https://www.paulgraham.com", []string{}},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := scan_site(tt.input, 2)
+			for _, v := range got {
+				// immediately rule out outputs that are
+				// different length than expected output
+				// (fewer or greater bad links than
+				// expected)
+
+				// otherwise just check against first
+				// element of output since it is max
+				// length of 1 in the test cases
+				if len(got) != len(tt.output) || v != tt.output[0] {
+					t.Errorf("scan_site() = %v, want %v", got, tt.output)
+				}
+			}
+		})
+	}
+}

@@ -24,6 +24,49 @@ func main() {
 	start := time.Now()
 
 	// scan site
+	bad_links := scan_site(root_url, ct)
+
+	// report results
+	report_results(bad_links)
+
+	// end timing
+	fmt.Printf("\n(Total execution time: %v)\n", time.Since(start))
+	return
+}
+
+func collect_user_input() (string, int) {
+	// clear terminal
+	clear_chars()
+	
+	// ask for URL
+	var root_url string = "https://www.google.com"
+	fmt.Printf("Enter site root URL\n\n(or just hit 'Enter' for default: %s)\n\n: ", root_url)
+
+	// overwrite root_url if user inputs one
+	fmt.Scanf("%s\n", &root_url)
+
+	// clear
+	clear_chars()
+
+	// ask for number of consumer threads
+	var ct int = 2
+	fmt.Printf("Enter number of threads\n\n(or just hit 'Enter' for default: %d)\n\n: ", ct)
+
+	// overwrite ct if user inputs one
+	fmt.Scanf("%d\n", &ct)
+
+	// clear
+	clear_chars()
+
+	return root_url, ct
+}
+
+func clear_chars() {
+	screen.Clear()
+	screen.MoveTopLeft()
+}
+
+func scan_site(root_url string, ct int) []string {
 	title_text_styles.Printf("Scanning: %s...\n", root_url)
 
 	c := colly.NewCollector(
@@ -79,45 +122,7 @@ func main() {
 	})
 
 	q.Run(c)
-
-	// report results
-	report_results(bad_links)
-
-	// end timing
-	fmt.Printf("\n(Total execution time: %v)\n", time.Since(start))
-	return
-}
-
-func collect_user_input() (string, int) {
-	// clear terminal
-	clear_chars()
-	
-	// ask for URL
-	var root_url string = "https://www.google.com"
-	fmt.Printf("Enter site root URL\n\n(or just hit 'Enter' for default: %s)\n\n: ", root_url)
-
-	// overwrite root_url if user inputs one
-	fmt.Scanf("%s\n", &root_url)
-
-	// clear
-	clear_chars()
-
-	// ask for number of consumer threads
-	var ct int = 2
-	fmt.Printf("Enter number of threads\n\n(or just hit 'Enter' for default: %d)\n\n: ", ct)
-
-	// overwrite ct if user inputs one
-	fmt.Scanf("%d\n", &ct)
-
-	// clear
-	clear_chars()
-
-	return root_url, ct
-}
-
-func clear_chars() {
-	screen.Clear()
-	screen.MoveTopLeft()
+	return bad_links
 }
 
 func report_results(bad_links []string) {
